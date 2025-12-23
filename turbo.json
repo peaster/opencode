@@ -6,6 +6,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "opencode#build": {
+      "dependsOn": ["desktop#build", "^build"],
+      "outputs": ["dist/**"]
+    },
     "opencode#test": {
       "dependsOn": ["^build"],
       "outputs": []

@@ -6,8 +6,8 @@ import { describeRoute, generateSpecs, validator, resolver, openAPIRouteHandler 
 import { Hono } from "hono"
 import { cors } from "hono/cors"
 import { stream, streamSSE } from "hono/streaming"
-import { proxy } from "hono/proxy"
 import { Session } from "../session"
+import { serveStatic } from "./static"
 import z from "zod"
 import { Provider } from "../provider/provider"
 import { filter, mapValues, sortBy, pipe } from "remeda"
@@ -2577,14 +2577,7 @@ export namespace Server {
           })
         },
       )
-      .all("/*", async (c) => {
-        return proxy(`https://desktop.opencode.ai${c.req.path}`, {
-          ...c.req,
-          headers: {
-            host: "desktop.opencode.ai",
-          },
-        })
-      }),
+      .all("/*", serveStatic),
   )
 
   export async function openapi() {
