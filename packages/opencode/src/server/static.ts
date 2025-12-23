@@ -20,7 +20,12 @@ const mimeTypes: Record<string, string> = {
 }
 
 function getMimeType(urlPath: string): string {
-  const ext = urlPath.substring(urlPath.lastIndexOf("."))
+  const dotIndex = urlPath.lastIndexOf(".")
+  // No extension - default to HTML (SPA fallback serves index.html)
+  if (dotIndex === -1) {
+    return "text/html; charset=utf-8"
+  }
+  const ext = urlPath.substring(dotIndex)
   return mimeTypes[ext] || "application/octet-stream"
 }
 
